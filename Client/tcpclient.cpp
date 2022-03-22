@@ -3,7 +3,7 @@
 TCPClient *TCPClient::instance = nullptr;
 
 /**
- * @brief Metodo para obtener la insrtancia de la clase Client, ya que es un singleton.
+ * Method to get the instance of the Client class, since it is a singleton.
  * @return
  */
 TCPClient* TCPClient::getInstance() {
@@ -14,8 +14,8 @@ TCPClient* TCPClient::getInstance() {
 }
 
 /**
- * Metodo para empezar a correr el cliente y se mantiene corriendo constantemente recibiendo lo que provenga del server.
- * Realiza procesos segun lo recibido, conecta con GUI para acceder a todas sus funciones.
+ * Method to start executing the client and keep it running constantly receiving what comes from the server.
+ * Performs processes as they are received, connects with the UI to access all its functions.
  */
 void TCPClient::Start() {
 
@@ -57,7 +57,7 @@ void TCPClient::Start() {
     exit(0);
 }
 
-/*Envia los mensajes*/
+//Allows send information to the server
 using namespace std::literals::chrono_literals;
 void TCPClient::Send(std::string msg) {
     std::this_thread::sleep_for(0.15s);

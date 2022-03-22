@@ -6,12 +6,12 @@
 TCPServer *TCPServer::instance = nullptr;
 
 /**
- * @brief Constructor para evitar instanciacion.
+ * Constructor to avoid instantiation.
  */
 TCPServer::TCPServer() {}
 
 /**
- * @brief Metodo para obtener la instancia del server, ya que solamente puede haber un server.
+ * Method to get the instance from the server, since there can only be one instance.
  * @return
  */
 TCPServer* TCPServer::getInstance() {
@@ -22,8 +22,8 @@ TCPServer* TCPServer::getInstance() {
 }
 
 /**
- * @brief Metodo start que se encarga de iniciar el server y lo mantiene abierto y a la escucha de cualquier mensaje del server,
- * solamente actua cuando recibe mensajes por parte del IDE.
+ * Method that is responsible for starting the server and keeping it open and listening for any message from the client,
+ * it only acts when it receives messages.
  */
 void TCPServer::Start() {
     listening = socket(AF_INET, SOCK_STREAM,0);
@@ -88,6 +88,7 @@ void TCPServer::Start() {
     close(clientSocket);
 }
 
+//Allows send information to the client
 using namespace std::literals::chrono_literals;
 void TCPServer::Send(std::string msg) {
     std::this_thread::sleep_for(0.25s);

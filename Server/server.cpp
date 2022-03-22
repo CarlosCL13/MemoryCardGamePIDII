@@ -14,13 +14,10 @@ Server::~Server()
     delete ui;
 }
 
+//Allows messages to be sent over the socket connection from the server class.
 void Server::send_message(string msg){
     TCPServer::getInstance()->Send(msg);
 
 }
 
-void Server::on_pushButton_clicked()
-{
-    send_message("si funca");
-}
 

@@ -6,16 +6,590 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>1040</width>
     <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Client</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="lblp2">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>30</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>1021</width>
+      <height>491</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="tarjeta01">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta02">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta03">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta04">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta05">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta13">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta12">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta15">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta14">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta11">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta23">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta22">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta25">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta24">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta21">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta33">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta32">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta35">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta34">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta31">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta36">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta08">
+     <property name="geometry">
+      <rect>
+       <x>730</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta27">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta17">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta28">
+     <property name="geometry">
+      <rect>
+       <x>730</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta18">
+     <property name="geometry">
+      <rect>
+       <x>730</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta39">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta29">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta19">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta09">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta06">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta20">
+     <property name="geometry">
+      <rect>
+       <x>930</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta16">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>150</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta38">
+     <property name="geometry">
+      <rect>
+       <x>730</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta26">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta10">
+     <property name="geometry">
+      <rect>
+       <x>930</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta07">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>50</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta40">
+     <property name="geometry">
+      <rect>
+       <x>930</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta37">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>350</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tarjeta30">
+     <property name="geometry">
+      <rect>
+       <x>930</x>
+       <y>250</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="lblp1">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>20</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>20</y>
+      <width>271</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Click on two cards to try to match them</string>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <resources/>
  <connections/>

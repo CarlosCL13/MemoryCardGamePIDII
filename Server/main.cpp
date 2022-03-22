@@ -4,6 +4,7 @@
 
 #include <QApplication>
 
+//Allows to start the execution of the server by instantiating it
 void RunServer(){
 
     std::cout << "Server Running" << std::endl;

@@ -6,25 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>555</width>
+    <height>377</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Server</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>170</y>
-      <width>89</width>
-      <height>25</height>
+      <x>240</x>
+      <y>10</y>
+      <width>51</width>
+      <height>17</height>
      </rect>
     </property>
     <property name="text">
-     <string>Carta</string>
+     <string>Server</string>
     </property>
    </widget>
   </widget>
@@ -33,7 +33,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>555</width>
      <height>22</height>
     </rect>
    </property>

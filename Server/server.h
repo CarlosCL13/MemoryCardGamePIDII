@@ -24,7 +24,7 @@ public:
     void send_message(string msg);
 
 private slots:
-    void on_pushButton_clicked();
+
 
 private:
     Ui::Server *ui;

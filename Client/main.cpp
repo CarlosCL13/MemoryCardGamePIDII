@@ -3,11 +3,11 @@
 
 #include <QApplication>
 
+//Allows to start the execution of the client by instantiating it
 void RunClient(){
 
     TCPClient::getInstance()->Start();
     std::cout << "Client Running" << std::endl;
-    TCPClient::getInstance()->Send("Todo bien");
 
 }
 
