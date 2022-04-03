@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>twitter.png</file>
+        <file>github.png</file>
+    </qresource>
+</RCC>

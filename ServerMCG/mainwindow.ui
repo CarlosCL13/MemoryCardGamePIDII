@@ -1,30 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Server</class>
- <widget class="QMainWindow" name="Server">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>377</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Server</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>10</y>
-      <width>51</width>
-      <height>17</height>
+      <x>280</x>
+      <y>210</y>
+      <width>89</width>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
-     <string>Server</string>
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="prueba">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>370</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Prueba</string>
     </property>
    </widget>
   </widget>
@@ -33,7 +46,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>555</width>
+     <width>800</width>
      <height>22</height>
     </rect>
    </property>
