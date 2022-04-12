@@ -1,6 +1,24 @@
 <RCC>
     <qresource prefix="/">
-        <file>twitter.png</file>
         <file>github.png</file>
+        <file>discord.png</file>
+        <file>facebook.png</file>
+        <file>google.png</file>
+        <file>instagram.png</file>
+        <file>linkedin.png</file>
+        <file>messenger.png</file>
+        <file>netflix.png</file>
+        <file>pinterest.png</file>
+        <file>telegram.png</file>
+        <file>tiktok.png</file>
+        <file>twitch.png</file>
+        <file>waze.png</file>
+        <file>whatsapp.png</file>
+        <file>wikipedia.png</file>
+        <file>youtube.png</file>
+        <file>zoom.png</file>
+        <file>skype.png</file>
+        <file>snapchat.png</file>
+        <file>spotify.png</file>
     </qresource>
 </RCC>

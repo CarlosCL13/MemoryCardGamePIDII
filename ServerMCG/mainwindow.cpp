@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "virtualmemory.h"
 
 MainWindow *MainWindow::instance = nullptr;
 
@@ -14,7 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
     clientSocket=new QTcpSocket(this);
     // Connect to slot
     connect(server, SIGNAL(newConnection()),this,SLOT(onNewConnection()));
+    VirtualMemory::getInstance()->generate_matrix();
 }
+
 
 MainWindow* MainWindow::getInstance() {
     if (instance == nullptr){
@@ -27,6 +30,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+/**
+ * @brief MainWindow::onNewConnection allows the connection with the client
+ */
 void MainWindow::onNewConnection()
 {
     qDebug() << "onNewConnection";
@@ -39,7 +46,10 @@ void MainWindow::onNewConnection()
     sockets.push_back(clientSocket);
 }
 
-
+/**
+ * @brief MainWindow::onStateChanged verifies the state of the server connections
+ * @param state
+ */
 void MainWindow::onStateChanged(QAbstractSocket::SocketState state)
 {
     qDebug() << "onStateChanged";
@@ -49,6 +59,10 @@ void MainWindow::onStateChanged(QAbstractSocket::SocketState state)
     }
 }
 
+
+/**
+ * @brief MainWindow::onReadyRead allows read the messages received
+ */
 
 void  MainWindow::onReadyRead()
 {
@@ -60,13 +74,21 @@ void  MainWindow::onReadyRead()
     cout << data.toStdString() << endl;
     onSendButtonPressed("que tal");*/
     const auto data = s->readAll();
-    string msg = data.toStdString();
-    if(msg=="img1"){
-        send_imagebase64();
+    QString datastr = data;
+    QString msg = datastr;
+    msg.remove(0,1);
+
+    if(datastr.contains("card")){
+        qDebug() << "Position get it";
+        QString position = datastr.remove(0,4);
+        position.insert(1,":");
+        string pos = position.toStdString();
+        string card = VirtualMemory::getInstance()->getCard(pos);
+        card.erase(0,1);
+        cout << "The card is: " + card << endl;
+        send_imagebase64(QString::fromStdString(card));
     }
-    else if(msg=="img2"){
-        qDebug() << QString::fromStdString(data.toStdString());
-    }
+
     //qDebug() << QString::fromStdString(data.toStdString());
     /*for (QTcpSocket* socket : sockets){
         socket ->write(data);
@@ -74,16 +96,27 @@ void  MainWindow::onReadyRead()
 
 }
 
-void MainWindow::send_imagebase64(){
+/**
+ * @brief MainWindow::send_imagebase64 allows send the image in base64
+ */
+
+
+void MainWindow::send_imagebase64(QString type){
+    QString typecard = type;
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);
-    QPixmap qp(":/github.png");
+    QPixmap qp(":/"+typecard+".png");
     qp.save(&buffer, "PNG");
     QString encoded = buffer.data().toBase64();
     string encodedstr = encoded.toStdString();
     //cout << "se envia" << endl;
     onSendButtonPressed(encoded);
 }
+
+/**
+ * @brief MainWindow::onSendButtonPressed allows send messages at the client
+ * @param msg
+ */
 
 void MainWindow::onSendButtonPressed(QString msg)
 {
@@ -93,14 +126,21 @@ void MainWindow::onSendButtonPressed(QString msg)
     clientSocket->flush();
 }
 
+
+
 void MainWindow::on_pushButton_clicked()
 {
-    send_imagebase64();
+    //send_imagebase64();
+    onSendButtonPressed("NHola que tal");
 }
+
 
 
 void MainWindow::on_prueba_clicked()
 {
-    //TCPServer::getInstance()->Send("me quieres?");
+    string carta =VirtualMemory::getInstance()->getCard("3:9");
+    QString qcarta = QString::fromStdString(carta);
+    qDebug() << qcarta.remove(0,1);
+
 }
 

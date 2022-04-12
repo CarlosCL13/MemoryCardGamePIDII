@@ -29,7 +29,7 @@ public:
     ~MainWindow();
     static MainWindow* getInstance();
 
-    void send_imagebase64();
+    void send_imagebase64(QString type);
 
 public slots:
     void onNewConnection();
