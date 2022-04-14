@@ -151,7 +151,6 @@ void VirtualMemory::changeStatus(string position){
         std::ofstream archive2;
         archive2.open("Disk.txt",std::ios::out);
         archive2<<changed_text;
-        //std::cout<<changed_text<<std::endl;
         archive.close();
 }
 

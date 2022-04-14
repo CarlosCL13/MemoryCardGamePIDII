@@ -10,6 +10,8 @@
 //Base64
 #include <QBuffer>
 
+#pragma once
+
 
 using namespace std;
 
@@ -40,11 +42,6 @@ public slots:
     void onSendButtonPressed(QString msg);
     void startGame();
     void send_imagebase64(QString type);
-
-private slots:
-    void on_pushButton_clicked();
-
-    void on_prueba_clicked();
 
 private:
     Ui::MainWindow *ui;

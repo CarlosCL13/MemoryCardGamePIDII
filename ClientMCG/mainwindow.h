@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QRegularExpression>
 
+#pragma once
+
 
 using namespace std;
 
@@ -39,7 +41,7 @@ public slots:
     void uncovered_card();
     void startGame();
     void addplayersname(QString name1, QString name2);
-    void setimagecard(string encoded, QPushButton* button);
+    void setimagecard(std::string encoded, QPushButton* button);
 
 
 

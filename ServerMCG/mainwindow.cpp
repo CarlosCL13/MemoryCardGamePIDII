@@ -4,6 +4,13 @@
 
 MainWindow *MainWindow::instance = nullptr;
 
+MainWindow* MainWindow::getInstance() {
+    if (instance == nullptr){
+        instance = new MainWindow;
+    }
+    return instance;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -18,13 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     startGame();
 }
 
-
-MainWindow* MainWindow::getInstance() {
-    if (instance == nullptr){
-        instance = new MainWindow;
-    }
-    return instance;
-}
 
 MainWindow::~MainWindow()
 {
@@ -133,20 +133,4 @@ void MainWindow::startGame(){
     VirtualMemory::getInstance()->generate_matrix();
 }
 
-
-void MainWindow::on_pushButton_clicked()
-{
-    //send_imagebase64();
-    onSendButtonPressed("NHola que tal");
-}
-
-
-
-void MainWindow::on_prueba_clicked()
-{
-    string carta =VirtualMemory::getInstance()->getCard("3:9");
-    QString qcarta = QString::fromStdString(carta);
-    qDebug() << qcarta.remove(0,1);
-
-}
 

@@ -9,7 +9,6 @@ using namespace std;
 class Cards
 {
 public:
-    Cards();
     QString type;
     QString state;
     QString position;

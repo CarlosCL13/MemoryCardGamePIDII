@@ -4,6 +4,12 @@
 
 MainWindow *MainWindow::instance = nullptr;
 
+MainWindow* MainWindow::getInstance() {
+    if (instance == nullptr){
+        instance = new MainWindow;
+    }
+    return instance;
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -58,13 +64,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-MainWindow* MainWindow::getInstance() {
-    if (instance == nullptr){
-        instance = new MainWindow;
-    }
-    return instance;
-}
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -101,7 +100,6 @@ void MainWindow::startGame(){
     QList<QPushButton *> buttons =  ui->centralwidget->findChildren<QPushButton*>();
        foreach (QPushButton* b, buttons) {
            b->setEnabled(true);
-           //b->setStyleSheet("#" + b->objectName() + "{ }");
        }
 }
 
@@ -125,15 +123,6 @@ void MainWindow::onReadyRead()
     QString msg = datastr;
     msg.remove(0,1);
     setimagecard(img,currentCard);
-
-    //N=message
-
-    /*if(datastr.contains("N")){
-        qDebug() << msg;
-    }else{
-        cout << "imagen recibidad" << endl;
-    }*/
-
 }
 
 
@@ -155,18 +144,17 @@ void MainWindow::onSendButtonPressed(QString message)
  */
 
 void MainWindow::setimagecard(string encoded, QPushButton* button){
-    //cout << "paso" << endl;
-    //std::string imgencoded = encoded.erase(encoded.find("img"));
-
     QString qencoded = QString::fromStdString(encoded);
     QPixmap image;
     image.loadFromData(QByteArray::fromBase64(qencoded.toLocal8Bit()));
     QIcon ButtonIcon(image);
-    /*ui->card00->setIcon(ButtonIcon);
-    ui->card00->setIconSize(QSize(60,60));*/
     button->setIcon(ButtonIcon);
     button->setIconSize(QSize(60,60));
 }
+
+/**
+ * @brief MainWindow::uncovered_card detect the card that was discovered and send the position to the server
+ */
 
 void MainWindow::uncovered_card(){
     currentCard = qobject_cast<QPushButton*>(sender());

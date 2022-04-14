@@ -22,14 +22,14 @@ void ClientRegister::on_startButton_clicked()
     if(name1 != "" && name1 != ""){
         MainWindow* window = new MainWindow;
         window->addplayersname(name1, name2);
-        this->hide();
+        this->close();
         window->show();
     }else{
         name1 = "Player 1";
         name2 = "PLayer 2";
         MainWindow* window = new MainWindow;
         window->addplayersname(name1, name2);
-        this->hide();
+        this->close();
         window->show();
     }
 
