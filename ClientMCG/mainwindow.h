@@ -26,14 +26,20 @@ public:
     static MainWindow* getInstance();
     QPushButton* currentCard;
     QPushButton* previousCard;
+    bool play_started;
+    int score1 = 0;
+    int score2 = 0;
+    int pairsofcards;
 
-    void addplayersname(QString name1, QString name2);
-    void setimagecard(string encoded, QPushButton* button);
+
 
 public slots:
     void onReadyRead();
     void onSendButtonPressed(QString messagge);
     void uncovered_card();
+    void startGame();
+    void addplayersname(QString name1, QString name2);
+    void setimagecard(string encoded, QPushButton* button);
 
 
 

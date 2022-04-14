@@ -54,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->card37, SIGNAL(clicked()), this, SLOT(uncovered_card()));
     connect(ui->card38, SIGNAL(clicked()), this, SLOT(uncovered_card()));
     connect(ui->card39, SIGNAL(clicked()), this, SLOT(uncovered_card()));
+    startGame();
 
 }
 
@@ -69,11 +70,39 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**
+ * @brief MainWindow::addplayersname allows to place the names of the players in the game interface
+ * @param name1
+ * @param name2
+ */
+
 void MainWindow::addplayersname(QString name1, QString name2){
     QString player1 = name1;
     QString player2 = name2;
     ui->lblname1->setText(player1);
     ui->lblname2->setText(player2);
+}
+
+void MainWindow::startGame(){
+    play_started = false;
+
+    pairsofcards = 20;
+
+    score1 = 0;
+
+    ui->lblpoints1->setText(QString::number(score1));
+
+    score2 = 0;
+
+    ui->lblpoinst2->setText(QString::number(score2));
+
+    ui->frame->setEnabled(true);
+
+    QList<QPushButton *> buttons =  ui->centralwidget->findChildren<QPushButton*>();
+       foreach (QPushButton* b, buttons) {
+           b->setEnabled(true);
+           //b->setStyleSheet("#" + b->objectName() + "{ }");
+       }
 }
 
 
@@ -104,8 +133,6 @@ void MainWindow::onReadyRead()
     }else{
         cout << "imagen recibidad" << endl;
     }*/
-//Probar que funcione lo de recibir la imagen
-
 
 }
 

@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     clientSocket=new QTcpSocket(this);
     // Connect to slot
     connect(server, SIGNAL(newConnection()),this,SLOT(onNewConnection()));
-    VirtualMemory::getInstance()->generate_matrix();
+    startGame();
 }
 
 
@@ -84,6 +84,7 @@ void  MainWindow::onReadyRead()
         position.insert(1,":");
         string pos = position.toStdString();
         string card = VirtualMemory::getInstance()->getCard(pos);
+        VirtualMemory::getInstance()->changeStatus(pos);
         card.erase(0,1);
         cout << "The card is: " + card << endl;
         send_imagebase64(QString::fromStdString(card));
@@ -125,7 +126,12 @@ void MainWindow::onSendButtonPressed(QString msg)
     clientSocket->write(msg.toUtf8());
     clientSocket->flush();
 }
-
+/**
+ * @brief MainWindow::startGame initializes game components, such as matrix, scores, and pairs remaining counter
+ */
+void MainWindow::startGame(){
+    VirtualMemory::getInstance()->generate_matrix();
+}
 
 
 void MainWindow::on_pushButton_clicked()

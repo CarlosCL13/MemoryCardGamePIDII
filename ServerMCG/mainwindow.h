@@ -29,13 +29,17 @@ public:
     ~MainWindow();
     static MainWindow* getInstance();
 
-    void send_imagebase64(QString type);
+    bool play_started;
+
+
 
 public slots:
     void onNewConnection();
     void onReadyRead();
     void onStateChanged(QAbstractSocket::SocketState state);
     void onSendButtonPressed(QString msg);
+    void startGame();
+    void send_imagebase64(QString type);
 
 private slots:
     void on_pushButton_clicked();

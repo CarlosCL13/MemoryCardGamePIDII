@@ -28,6 +28,8 @@ public:
 
     string getCard(string position);
 
+    void changeStatus(string position);
+
     string types[40] = {"discord","facebook","github","google","instagram","linkedin","messenger","netflix","pinterest","skype",
                         "snapchat","spotify","telegram","tiktok","twitch","waze","whatsapp","wikipedia","youtube","zoom",
                         "discord","facebook","github","google","instagram","linkedin","messenger","netflix","pinterest","skype",
