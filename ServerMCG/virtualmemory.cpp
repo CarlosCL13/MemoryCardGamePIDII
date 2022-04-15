@@ -10,8 +10,7 @@ VirtualMemory* VirtualMemory::getInstance() {
     return instance;
 }
 
-VirtualMemory::VirtualMemory()
-{}
+VirtualMemory::VirtualMemory(){}
 
 /**
  * @brief VirtualMemory::generate_matrix

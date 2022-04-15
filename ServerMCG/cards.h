@@ -9,9 +9,10 @@ using namespace std;
 class Cards
 {
 public:
-    QString type;
-    QString state;
-    QString position;
+    string type;
+    string state;
+    string position;
+    int size;
 };
 
 #endif // CARDS_H

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "virtualmemory.h"
+#include "memory.h"
 
 MainWindow *MainWindow::instance = nullptr;
 
@@ -80,20 +81,23 @@ void  MainWindow::onReadyRead()
 
     if(datastr.contains("card")){
         qDebug() << "Position get it";
-        QString position = datastr.remove(0,4);
-        position.insert(1,":");
-        string pos = position.toStdString();
-        string card = VirtualMemory::getInstance()->getCard(pos);
-        VirtualMemory::getInstance()->changeStatus(pos);
-        card.erase(0,1);
-        cout << "The card is: " + card << endl;
-        send_imagebase64(QString::fromStdString(card));
+        parsetosearch(datastr);
     }
 
     //qDebug() << QString::fromStdString(data.toStdString());
     /*for (QTcpSocket* socket : sockets){
         socket ->write(data);
     }*/
+
+}
+
+void MainWindow::parsetosearch(QString info){
+    QString position = info.remove(0,4);
+    position.insert(1,":");
+    string pos = position.toStdString();
+    string card = Memory::getInstance()->getCard(pos);
+    cout << "The card is: " + card << endl;
+    send_imagebase64(QString::fromStdString(card));
 
 }
 
@@ -131,6 +135,7 @@ void MainWindow::onSendButtonPressed(QString msg)
  */
 void MainWindow::startGame(){
     VirtualMemory::getInstance()->generate_matrix();
+    Memory::getInstance()->start_matrix();
 }
 
 

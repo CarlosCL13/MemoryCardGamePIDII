@@ -42,6 +42,7 @@ public slots:
     void onSendButtonPressed(QString msg);
     void startGame();
     void send_imagebase64(QString type);
+    void parsetosearch(QString info);
 
 private:
     Ui::MainWindow *ui;

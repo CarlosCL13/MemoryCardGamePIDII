@@ -12,11 +12,13 @@ SOURCES += \
     cards.cpp \
     main.cpp \
     mainwindow.cpp \
+    memory.cpp \
     virtualmemory.cpp
 
 HEADERS += \
     cards.h \
     mainwindow.h \
+    memory.h \
     virtualmemory.h
 
 FORMS += \
