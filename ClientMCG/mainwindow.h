@@ -41,7 +41,7 @@ public slots:
     void uncovered_card();
     void startGame();
     void addplayersname(QString name1, QString name2);
-    void setimagecard(std::string encoded, QPushButton* button);
+    void setimagecard(QString encoded, QPushButton* button);
 
 
 

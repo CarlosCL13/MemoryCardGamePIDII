@@ -69,15 +69,17 @@ string VirtualMemory::getCard(std::string position){
         std::cout<<"Can't open the disk";
     }
     std::string information;
+    std::string typeCard;
     int row = 0;
     while (getline(archive, information)) {
         int column = 0;
-        for(int i= 0 ;i <= information.length();i++){
+        int length = information.length();
+        for(int i= 0 ;i <= length;i++){
             std::string parenthesis;
             parenthesis += information[i];
             std::string position2 = std::to_string(row) + ":" +std::to_string(column);
             if(position == position2){
-                std::string typeCard;
+                //std::string typeCard;
                 int j = i;
                 while(true){
                     std::string letter2;
@@ -99,7 +101,7 @@ string VirtualMemory::getCard(std::string position){
         row += 1;
     }
     archive.close();
-    return 0;
+    return typeCard;
 
 }
 
@@ -122,10 +124,11 @@ void VirtualMemory::changeStatus(string position){
             information += "\n";
         }
         archive.close();
+        int length = information.length();
         int raw = 0;
         int column = 0;
         std::string changed_text;
-        for(int i= 0 ;i <= information.length();i++){
+        for(int i= 0 ;i <= length;i++){
 
             std::string parenthesis;
             parenthesis +=information[i];
@@ -150,6 +153,6 @@ void VirtualMemory::changeStatus(string position){
         std::ofstream archive2;
         archive2.open("Disk.txt",std::ios::out);
         archive2<<changed_text;
-        archive.close();
+        archive2.close();
 }
 

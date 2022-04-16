@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 #include <iostream>
 #include <fstream>
+#include "memory.h"
 
 //Base64
 #include <QBuffer>
@@ -32,8 +33,6 @@ public:
     static MainWindow* getInstance();
 
     bool play_started;
-
-
 
 public slots:
     void onNewConnection();

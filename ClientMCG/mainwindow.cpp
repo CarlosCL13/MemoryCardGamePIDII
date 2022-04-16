@@ -119,10 +119,9 @@ void MainWindow::onReadyRead()
 
     const auto data = socket.readAll();
     QString datastr = data;
-    string img = datastr.toStdString();
     QString msg = datastr;
     msg.remove(0,1);
-    setimagecard(img,currentCard);
+    setimagecard(datastr,currentCard);
 }
 
 
@@ -143,10 +142,9 @@ void MainWindow::onSendButtonPressed(QString message)
  * @param encoded have the image received by the server
  */
 
-void MainWindow::setimagecard(string encoded, QPushButton* button){
-    QString qencoded = QString::fromStdString(encoded);
+void MainWindow::setimagecard(QString encoded, QPushButton* button){
     QPixmap image;
-    image.loadFromData(QByteArray::fromBase64(qencoded.toLocal8Bit()));
+    image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
     QIcon ButtonIcon(image);
     button->setIcon(ButtonIcon);
     button->setIconSize(QSize(60,60));

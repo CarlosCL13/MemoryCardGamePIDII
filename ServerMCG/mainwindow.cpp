@@ -95,10 +95,9 @@ void MainWindow::parsetosearch(QString info){
     QString position = info.remove(0,4);
     position.insert(1,":");
     string pos = position.toStdString();
-    string card = Memory::getInstance()->getCard(pos);
+    string card = Memory::getInstance()->getinmemoryCard(pos);
     cout << "The card is: " + card << endl;
     send_imagebase64(QString::fromStdString(card));
-
 }
 
 /**
@@ -133,9 +132,14 @@ void MainWindow::onSendButtonPressed(QString msg)
 /**
  * @brief MainWindow::startGame initializes game components, such as matrix, scores, and pairs remaining counter
  */
+
 void MainWindow::startGame(){
     VirtualMemory::getInstance()->generate_matrix();
-    Memory::getInstance()->start_matrix();
-}
 
+    Memory::getInstance()->start_matrix();
+
+    ui->lblhits->setText(QString::number(Memory::getInstance()->pagehits));
+
+    ui->lblfaults->setText(QString::number(Memory::getInstance()->pagefaults));
+}
 

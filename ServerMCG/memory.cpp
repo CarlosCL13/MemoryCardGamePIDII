@@ -14,96 +14,90 @@ Memory* Memory::getInstance() {
 
 Memory::Memory(){}
 
+
 /**
  * @brief Memory::start_matrix initializes the in-memory array that is responsible for paging
  */
 
 void Memory::start_matrix(){
+    int row;
+    int column;
+    srand(time(NULL));
     qDebug() << "Array in memory initialized";
     for(int i= 0;i< 15;i++){
-        ptrcards[i] = nullptr;
+        row = rand()%4;
+        column = rand()%10;
+        string position = to_string(row) + ":" + to_string(column);
+        VirtualMemory::getInstance()->changeStatus(position);
+        loadcardinmemory(position, VirtualMemory::getInstance()->getCard(position));
     }
 }
 
 /**
- * @brief Memory::load_cards load cards from disk to memory
+ * @brief Memory::loadcardinmemory load cards from disk to memory
  * @param position
  * @param information
- * @return
  */
 
-Cards* Memory::load_cards(string position, string information)
-{
+void Memory::loadcardinmemory(string position, string information){
     Cards *loaded_cards = new Cards();
     loaded_cards->position = position;
     loaded_cards->state = information[0];
     information.erase(0,1);
     loaded_cards->type = information;
     loaded_cards->size = imagesize();
-    return loaded_cards;
-
+    memorymatrix[position] = *loaded_cards;
+    cout << "The type is: " + memorymatrix[position].type << endl;
 }
 
 /**
- * @brief Memory::is_loaded check if a card is charged or not
+ * @brief Memory::is_loaded_card check if a card is charged or not
  * @param position
  * @return
  */
 
-string Memory::is_loaded(string position){
+string Memory::is_loaded_card(string position){
     string answer = "NO";
 
-    for(int i= 0;i< 15;i++){
-
-        if(ptrcards[i] != nullptr){
-            if(ptrcards[i]->position == position){
-                answer =  std::to_string(i);
-                break;
-            }
-
-        }
-
+    if (memorymatrix.find(position) == memorymatrix.end()){
+        return answer;
+    }
+    else{
+        answer = memorymatrix[position].type;
     }
 
-    //std::cout<<answer;
     return answer;
-
 }
 
 /**
- * @brief Memory::getCard it is responsible for searching the memory for the requested card and loading it if it is not loaded
+ * @brief Memory::getinmemoryCard it is responsible for searching the memory for the requested card and loading it if it is not loaded
  * @param position
  * @return
  */
 
-string Memory::getCard(string position){
-    std::string load = is_loaded(position);
-       if(load != "NO"){
-
-           return ptrcards[stoi(load)]->type;
-       }
-       else{
-           if(freememory == 14){
-               freememory = 0;
-           }
-           else{
-               freememory += 1;
-           }
-
-           if(ptrcards[freememory] == nullptr){
-               ptrcards[freememory]= load_cards(position,VirtualMemory::getInstance()->getCard(position));
-           }
-
-           else{
-               VirtualMemory::getInstance()->changeStatus(ptrcards[freememory]->position);
-               ptrcards[freememory]= load_cards(position, VirtualMemory::getInstance()->getCard(position));
-
-           }
-
-
-           return ptrcards[freememory]->type;
+string Memory::getinmemoryCard(string position){
+    string load = is_loaded_card(position);
+    if(load != "NO"){
+        pagehits++;
+        cout << "Page Hits: " + to_string(pagehits) << endl;
+        return load;
+    }
+    else{
+        if(memorymatrix.size() < 15){
+            loadcardinmemory(position, VirtualMemory::getInstance()->getCard(position));
+        }
+        else{
+            memorymatrix.erase(prev(memorymatrix.end()));
+            VirtualMemory::getInstance()->changeStatus(position);
+            loadcardinmemory(position, VirtualMemory::getInstance()->getCard(position));
+        }
+        pagefaults++;
+        cout << "Page Faults: " + to_string(pagefaults) << endl;
+        return memorymatrix[position].type;
     }
 }
+
+
 
 /**
  * @brief Memory::imagesize allows assigning the size of the image to each card object

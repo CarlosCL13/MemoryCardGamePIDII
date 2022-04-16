@@ -4,8 +4,10 @@
 #include <iostream>
 #include <string>
 #include <QImage>
-#include <QHash>
 #include "cards.h"
+#include <map>
+#include<time.h>
+
 
 class Memory
 {
@@ -17,9 +19,15 @@ private:
 public:
     Memory();
 
+    int pagehits = 0;
+
+    int pagefaults = 0;
+
     static Memory* getInstance();
 
-    Cards *ptrcards[15];
+    Cards *ptrcards;
+
+    map<string,Cards> memorymatrix;
 
     int imagesize();
 
@@ -27,11 +35,11 @@ public:
 
     void start_matrix();
 
-    string is_loaded(string position);
+    string is_loaded_card(string position);
 
-    string getCard(string position);
+    string getinmemoryCard(string position);
 
-    Cards * load_cards(std::string position, std::string information);
+    void loadcardinmemory(string position, string information);
 
 };
 
