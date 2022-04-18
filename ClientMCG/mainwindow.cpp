@@ -82,6 +82,10 @@ void MainWindow::addplayersname(QString name1, QString name2){
     ui->lblname2->setText(player2);
 }
 
+/**
+ * @brief MainWindow::startGame initializes game components, such as buttons, scores, and pairs remaining counter
+ */
+
 void MainWindow::startGame(){
     play_started = false;
 
@@ -156,8 +160,9 @@ void MainWindow::onSendButtonPressed(QString message)
 }
 
 /**
- * @brief MainWindow::setimagecard Change the image at the button pressed
+ * @brief MainWindow::setimagecard changes the image at the first button pressed
  * @param encoded have the image received by the server
+ * @param button is the button where the image is changed
  */
 
 void MainWindow::setimagecard1(QString encoded, QPushButton* button){
@@ -167,6 +172,12 @@ void MainWindow::setimagecard1(QString encoded, QPushButton* button){
     button->setIcon(ButtonIcon);
     button->setIconSize(QSize(60,60));
 }
+
+/**
+ * @brief MainWindow::setimagecard2 changes the image on the second button pressed and asks if both cards are the same
+ * @param encoded have the image received by the server
+ * @param button is the button where the image is changed
+ */
 
 void MainWindow::setimagecard2(QString encoded, QPushButton* button){
     QPixmap image;
@@ -190,6 +201,10 @@ void MainWindow::uncovered_card(){
     currentCard->setEnabled(false);
 }
 
+/**
+ * @brief MainWindow::final_result check if all cards were revealed to finish the game
+ */
+
 void MainWindow::final_result(){
     msgBox.setWindowTitle("Game over");
     msgBox.setIcon(QMessageBox::Information);
@@ -209,12 +224,20 @@ void MainWindow::final_result(){
     }
 }
 
+/**
+ * @brief MainWindow::partial_result1 takes appropriate action if the flipped cards are uneven, such as lowering the score
+ */
+
 void MainWindow::partial_result1(){
     score1++;
     ui->lblpoints1->setText(QString::number(score1));
     pairsofcards--;
     final_result();
 }
+
+/**
+ * @brief MainWindow::partial_result2 takes appropriate action if the flipped cards are equal, such as increase the score
+ */
 
 void MainWindow::partial_result2(){
     score1--;
@@ -223,6 +246,10 @@ void MainWindow::partial_result2(){
     QTimer::singleShot(1000, this, SLOT(restartCards()));
 }
 
+
+/**
+ * @brief MainWindow::restartCards allows cards to be returned to their previous state if they are not the same
+ */
 
 void MainWindow::restartCards(){
     currentCard->setIcon(QIcon());

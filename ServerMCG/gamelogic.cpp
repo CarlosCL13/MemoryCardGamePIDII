@@ -13,6 +13,12 @@ GameLogic* GameLogic::getInstance() {
 
 GameLogic::GameLogic(){}
 
+/**
+ * @brief GameLogic::getType searches in memory for the type of card according to the position of the matrix received
+ * @param position
+ * @return
+ */
+
 string GameLogic::getType(string position){
     string answer;
     if(position1 == ""){
@@ -25,6 +31,11 @@ string GameLogic::getType(string position){
 
     return answer;
 }
+
+/**
+ * @brief GameLogic::are_equals
+ * @return
+ */
 
 string GameLogic::are_equals(){
     string type1 = Memory::getInstance()->getinmemoryCard(position1);
