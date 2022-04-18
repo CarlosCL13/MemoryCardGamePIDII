@@ -17,8 +17,19 @@ public:
     QString name1;
     QString name2;
 
+signals:
+    void namesignal();
+
+
 private slots:
     void on_startButton_clicked();
+    void onSignalEmited();
+
+    void on_name1_editingFinished();
+
+    void on_name2_editingFinished();
+
+    void on_name2_returnPressed();
 
 private:
     Ui::ClientRegister *ui;

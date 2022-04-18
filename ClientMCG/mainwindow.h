@@ -6,6 +6,8 @@
 #include <iostream>
 #include <QPushButton>
 #include <QRegularExpression>
+#include <QTimer>
+#include <QMessageBox>
 
 #pragma once
 
@@ -28,10 +30,12 @@ public:
     static MainWindow* getInstance();
     QPushButton* currentCard;
     QPushButton* previousCard;
-    bool play_started;
+    QTimer *timer=new QTimer();
+    QMessageBox msgBox;
+    bool play_started = false;
     int score1 = 0;
     int score2 = 0;
-    int pairsofcards;
+    int pairsofcards = 20;
 
 
 
@@ -41,7 +45,12 @@ public slots:
     void uncovered_card();
     void startGame();
     void addplayersname(QString name1, QString name2);
-    void setimagecard(QString encoded, QPushButton* button);
+    void setimagecard1(QString encoded, QPushButton* button);
+    void setimagecard2(QString encoded, QPushButton* button);
+    void partial_result1();
+    void partial_result2();
+    void final_result();
+    void restartCards();
 
 
 

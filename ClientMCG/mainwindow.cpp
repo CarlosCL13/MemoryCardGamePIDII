@@ -100,6 +100,7 @@ void MainWindow::startGame(){
     QList<QPushButton *> buttons =  ui->centralwidget->findChildren<QPushButton*>();
        foreach (QPushButton* b, buttons) {
            b->setEnabled(true);
+           b->setIcon(QIcon());
        }
 }
 
@@ -121,7 +122,24 @@ void MainWindow::onReadyRead()
     QString datastr = data;
     QString msg = datastr;
     msg.remove(0,1);
-    setimagecard(datastr,currentCard);
+    if(datastr.startsWith("Y")){
+        partial_result1();
+    }
+    if(datastr.startsWith("N")){
+        partial_result2();
+    }
+    if(datastr.size() > 3){
+        if(datastr.contains("FIR")){
+            previousCard=currentCard;
+            QString img = datastr.remove(0,3);
+            setimagecard1(img,currentCard);
+        }
+        if(datastr.contains("SEC")){
+            QString img = datastr.remove(0,3);
+            setimagecard2(img,currentCard);
+        }
+    }
+
 }
 
 
@@ -142,12 +160,22 @@ void MainWindow::onSendButtonPressed(QString message)
  * @param encoded have the image received by the server
  */
 
-void MainWindow::setimagecard(QString encoded, QPushButton* button){
+void MainWindow::setimagecard1(QString encoded, QPushButton* button){
     QPixmap image;
     image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
     QIcon ButtonIcon(image);
     button->setIcon(ButtonIcon);
     button->setIconSize(QSize(60,60));
+}
+
+void MainWindow::setimagecard2(QString encoded, QPushButton* button){
+    QPixmap image;
+    image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
+    QIcon ButtonIcon(image);
+    button->setIcon(ButtonIcon);
+    button->setIconSize(QSize(60,60));
+    ui->frame->setEnabled(false);
+    onSendButtonPressed("Are equals");
 }
 
 /**
@@ -159,8 +187,52 @@ void MainWindow::uncovered_card(){
     QString position = currentCard->objectName();
     qDebug() << position;
     onSendButtonPressed(position);
+    currentCard->setEnabled(false);
+}
+
+void MainWindow::final_result(){
+    msgBox.setWindowTitle("Game over");
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setStandardButtons(QMessageBox::Yes);
+    msgBox.addButton(QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    msgBox.setEscapeButton(QMessageBox::No);
+    ui->frame->setEnabled(true);
+    if(pairsofcards == 0){
+        msgBox.setText("¡You win! Final score: " + QString::number(score1) + "\nIt was fun?");
+        if (QMessageBox::Yes == msgBox.exec()){
+            QCoreApplication::quit();
+        }
+        else{
+            QCoreApplication::quit();
+        }
+    }
+}
+
+void MainWindow::partial_result1(){
+    score1++;
+    ui->lblpoints1->setText(QString::number(score1));
+    pairsofcards--;
+    final_result();
+}
+
+void MainWindow::partial_result2(){
+    score1--;
+    ui->lblpoints1->setText(QString::number(score1));
+    //ui->frame->setEnabled(false);
+    QTimer::singleShot(1000, this, SLOT(restartCards()));
 }
 
 
+void MainWindow::restartCards(){
+    currentCard->setIcon(QIcon());
+    previousCard->setIcon(QIcon());
+
+    currentCard->setEnabled(true);
+    previousCard->setEnabled(true);
+
+    ui->frame->setEnabled(true);
+
+}
 
 

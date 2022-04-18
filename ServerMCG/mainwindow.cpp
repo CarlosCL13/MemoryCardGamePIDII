@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "virtualmemory.h"
 #include "memory.h"
+#include "gamelogic.h"
 
 MainWindow *MainWindow::instance = nullptr;
 
@@ -83,6 +84,18 @@ void  MainWindow::onReadyRead()
         qDebug() << "Position get it";
         parsetosearch(datastr);
     }
+    if(datastr.contains("Are equals")){
+        string equals = GameLogic::getInstance()->are_equals();
+        if(equals == "YES"){
+            onSendButtonPressed("YESEQUALS");
+            GameLogic::getInstance()->position1 = "";
+            GameLogic::getInstance()->position2 = "";
+        }else{
+            onSendButtonPressed("NOEQUALS");
+            GameLogic::getInstance()->position1 = "";
+            GameLogic::getInstance()->position2 = "";
+        }
+    }
 
     //qDebug() << QString::fromStdString(data.toStdString());
     /*for (QTcpSocket* socket : sockets){
@@ -95,7 +108,7 @@ void MainWindow::parsetosearch(QString info){
     QString position = info.remove(0,4);
     position.insert(1,":");
     string pos = position.toStdString();
-    string card = Memory::getInstance()->getinmemoryCard(pos);
+    string card = GameLogic::getInstance()->getType(pos);
     cout << "The card is: " + card << endl;
     send_imagebase64(QString::fromStdString(card));
 }
@@ -106,7 +119,8 @@ void MainWindow::parsetosearch(QString info){
 
 
 void MainWindow::send_imagebase64(QString type){
-    QString typecard = type;
+    QString card_number = type.mid(0,3);
+    QString typecard = type.remove(0,3);
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);
     QPixmap qp(":/"+typecard+".png");
@@ -114,7 +128,7 @@ void MainWindow::send_imagebase64(QString type){
     QString encoded = buffer.data().toBase64();
     string encodedstr = encoded.toStdString();
     //cout << "se envia" << endl;
-    onSendButtonPressed(encoded);
+    onSendButtonPressed(card_number+encoded);
 }
 
 /**

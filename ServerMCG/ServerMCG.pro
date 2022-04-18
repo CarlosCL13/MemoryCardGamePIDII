@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     cards.cpp \
+    gamelogic.cpp \
     main.cpp \
     mainwindow.cpp \
     memory.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     cards.h \
+    gamelogic.h \
     mainwindow.h \
     memory.h \
     virtualmemory.h

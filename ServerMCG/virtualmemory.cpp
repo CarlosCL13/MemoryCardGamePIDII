@@ -82,14 +82,14 @@ string VirtualMemory::getCard(std::string position){
                 //std::string typeCard;
                 int j = i;
                 while(true){
-                    std::string letter2;
-                    letter2 += information[j];
-                    if (letter2 == "]"){
+                    std::string parenthesis2;
+                    parenthesis2 += information[j];
+                    if (parenthesis2 == "]"){
                         //std::cout << typeCard << std::endl;
                         return typeCard;
                     }
                     else{
-                        typeCard += letter2 ;
+                        typeCard += parenthesis2 ;
                         j += 1;
                     }
                 }

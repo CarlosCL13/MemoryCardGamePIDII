@@ -7,6 +7,7 @@ ClientRegister::ClientRegister(QWidget *parent) :
     ui(new Ui::ClientRegister)
 {
     ui->setupUi(this);
+    connect(this, &ClientRegister::namesignal, this, &ClientRegister::onSignalEmited);
 }
 
 ClientRegister::~ClientRegister()
@@ -14,24 +15,31 @@ ClientRegister::~ClientRegister()
     delete ui;
 }
 
-
+void ClientRegister::onSignalEmited(){
+    ui->startButton->setEnabled(true);
+}
 void ClientRegister::on_startButton_clicked()
 {
     name1 = ui->name1->text();
     name2 = ui->name2->text();
-    if(name1 != "" && name1 != ""){
-        MainWindow* window = new MainWindow;
-        window->addplayersname(name1, name2);
-        this->close();
-        window->show();
-    }else{
-        name1 = "Player 1";
-        name2 = "PLayer 2";
-        MainWindow* window = new MainWindow;
-        window->addplayersname(name1, name2);
-        this->close();
-        window->show();
-    }
+    MainWindow* window = new MainWindow;
+    window->addplayersname(name1, name2);
+    this->close();
+    window->show();
+}
 
+
+void ClientRegister::on_name1_editingFinished(){
+    cout << "First name get it" << endl;
+}
+
+
+void ClientRegister::on_name2_editingFinished(){
+    emit namesignal();
+}
+
+
+void ClientRegister::on_name2_returnPressed(){
+    emit namesignal();
 }
 
