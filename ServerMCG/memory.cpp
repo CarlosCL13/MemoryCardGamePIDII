@@ -47,7 +47,7 @@ void Memory::loadcardinmemory(string position, string information){
     loaded_cards->type = information;
     loaded_cards->size = imagesize();
     memorymatrix[position] = *loaded_cards;
-    cout << "The type is: " + memorymatrix[position].type << endl;
+    //cout << "The type is: " + memorymatrix[position].type << endl;
 }
 
 /**
@@ -97,6 +97,15 @@ string Memory::getinmemoryCard(string position){
     }
 }
 
+/**
+ * @brief Memory::erasecardinmemory
+ * @param position
+ */
+
+void Memory::erasecardinmemory(string position){
+    string positiontoerase = position;
+    memorymatrix.erase(positiontoerase);
+}
 
 
 /**

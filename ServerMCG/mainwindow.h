@@ -32,7 +32,9 @@ public:
     ~MainWindow();
     static MainWindow* getInstance();
 
-    bool play_started;
+    QString messagetosend = "";
+    QString *ptrmessagetosend = &messagetosend;
+
 
 public slots:
     void onNewConnection();
@@ -40,8 +42,9 @@ public slots:
     void onStateChanged(QAbstractSocket::SocketState state);
     void onSendButtonPressed(QString msg);
     void startGame();
-    void send_imagebase64(QString type);
+    QString send_imagebase64(QString type);
     void parsetosearch(QString info);
+    void update_message();
 
 private:
     Ui::MainWindow *ui;

@@ -3,6 +3,7 @@
 #include "virtualmemory.h"
 #include "memory.h"
 #include "gamelogic.h"
+#include "handler.h"
 
 MainWindow *MainWindow::instance = nullptr;
 
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Connect to slot
     connect(server, SIGNAL(newConnection()),this,SLOT(onNewConnection()));
     startGame();
+
 }
 
 
@@ -66,19 +68,19 @@ void MainWindow::onStateChanged(QAbstractSocket::SocketState state)
  * @brief MainWindow::onReadyRead allows read the messages received
  */
 
-void  MainWindow::onReadyRead()
+void MainWindow::onReadyRead()
 {
     qDebug() << "onReadyRead";
-
     QTcpSocket* s = static_cast<QTcpSocket*>(QObject::sender());
-    /*QByteArray data = s->readAll();
-    QString::fromStdString(data.toStdString());
-    cout << data.toStdString() << endl;
-    onSendButtonPressed("que tal");*/
     const auto data = s->readAll();
     QString datastr = data;
-    QString msg = datastr;
-    msg.remove(0,1);
+    /*Handler::getInstance()->messagehandler(datastr);
+    while(true){
+        if(messagetosend != ""){
+        this->onSendButtonPressed(messagetosend);
+        break;
+       }
+    }*/
 
     if(datastr.contains("card")){
         qDebug() << "Position get it";
@@ -97,11 +99,6 @@ void  MainWindow::onReadyRead()
         }
     }
 
-    //qDebug() << QString::fromStdString(data.toStdString());
-    /*for (QTcpSocket* socket : sockets){
-        socket ->write(data);
-    }*/
-
 }
 
 void MainWindow::parsetosearch(QString info){
@@ -110,17 +107,16 @@ void MainWindow::parsetosearch(QString info){
     string pos = position.toStdString();
     string card = GameLogic::getInstance()->getType(pos);
     cout << "The card is: " + card << endl;
-    send_imagebase64(QString::fromStdString(card));
+    QString image = send_imagebase64(QString::fromStdString(card));
+    onSendButtonPressed(image);
 }
 
 /**
  * @brief MainWindow::send_imagebase64 allows send the image in base64
  */
 
-
-void MainWindow::send_imagebase64(QString type){
-    QString card_number = type.mid(0,3);
-    QString typecard = type.remove(0,3);
+QString MainWindow::send_imagebase64(QString type){
+    QString typecard = type;
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);
     QPixmap qp(":/"+typecard+".png");
@@ -128,7 +124,10 @@ void MainWindow::send_imagebase64(QString type){
     QString encoded = buffer.data().toBase64();
     string encodedstr = encoded.toStdString();
     //cout << "se envia" << endl;
-    onSendButtonPressed(card_number+encoded);
+    //onSendButtonPressed(card_number+encoded);
+    QString information = encoded;
+    return information;
+
 }
 
 /**
@@ -139,21 +138,23 @@ void MainWindow::send_imagebase64(QString type){
 void MainWindow::onSendButtonPressed(QString msg)
 {
     qDebug() << "onSendButtonPressed";
-    QString text = msg;
     clientSocket->write(msg.toUtf8());
     clientSocket->flush();
 }
+
 /**
  * @brief MainWindow::startGame initializes game components, such as matrix, scores, and pairs remaining counter
  */
 
 void MainWindow::startGame(){
+
     VirtualMemory::getInstance()->generate_matrix();
 
     Memory::getInstance()->start_matrix();
 
-    ui->lblhits->setText(QString::number(Memory::getInstance()->pagehits));
-
-    ui->lblfaults->setText(QString::number(Memory::getInstance()->pagefaults));
 }
 
+void MainWindow::update_message(){
+    Handler::getInstance()->setmessagetosend(ptrmessagetosend);
+
+}

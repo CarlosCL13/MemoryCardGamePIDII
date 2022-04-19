@@ -494,7 +494,7 @@
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblfaults">
@@ -507,7 +507,7 @@
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>0</string>
     </property>
    </widget>
   </widget>

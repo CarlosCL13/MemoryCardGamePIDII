@@ -87,7 +87,7 @@ void MainWindow::addplayersname(QString name1, QString name2){
  */
 
 void MainWindow::startGame(){
-    play_started = false;
+    first_card = true;
 
     pairsofcards = 20;
 
@@ -115,32 +115,28 @@ void MainWindow::startGame(){
 
 void MainWindow::onReadyRead()
 {
-    //QByteArray data = socket.readAll();
-    //qDebug() << data;
-    //QString::fromStdString(data.toStdString());
-    /*string base = data.toStdString();
-
-    setimagecard(base);*/
 
     const auto data = socket.readAll();
     QString datastr = data;
     QString msg = datastr;
     msg.remove(0,1);
-    if(datastr.startsWith("Y")){
-        partial_result1();
-    }
-    if(datastr.startsWith("N")){
-        partial_result2();
-    }
-    if(datastr.size() > 3){
-        if(datastr.contains("FIR")){
+    if(datastr.length()>10){
+        if(first_card){
             previousCard=currentCard;
-            QString img = datastr.remove(0,3);
-            setimagecard1(img,currentCard);
+            setimagecard1(datastr,currentCard);
+            first_card = false;
+
+        }else{
+            setimagecard2(datastr, currentCard);
+            first_card = true;
         }
-        if(datastr.contains("SEC")){
-            QString img = datastr.remove(0,3);
-            setimagecard2(img,currentCard);
+
+    }else if(datastr.length()<10){
+        if(datastr.contains("YESEQUALS")){
+            partial_result1();
+        }
+        else{
+            partial_result2();
         }
     }
 
@@ -242,7 +238,6 @@ void MainWindow::partial_result1(){
 void MainWindow::partial_result2(){
     score1--;
     ui->lblpoints1->setText(QString::number(score1));
-    //ui->frame->setEnabled(false);
     QTimer::singleShot(1000, this, SLOT(restartCards()));
 }
 
@@ -252,8 +247,9 @@ void MainWindow::partial_result2(){
  */
 
 void MainWindow::restartCards(){
-    currentCard->setIcon(QIcon());
+
     previousCard->setIcon(QIcon());
+    currentCard->setIcon(QIcon());
 
     currentCard->setEnabled(true);
     previousCard->setEnabled(true);

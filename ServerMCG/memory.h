@@ -41,6 +41,8 @@ public:
 
     void loadcardinmemory(string position, string information);
 
+    void erasecardinmemory(string position);
+
 };
 
 #endif // MEMORY_H

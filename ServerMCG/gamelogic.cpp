@@ -23,10 +23,10 @@ string GameLogic::getType(string position){
     string answer;
     if(position1 == ""){
         position1 = position;
-        answer = "FIR" + Memory::getInstance()->getinmemoryCard(position);
+        answer = Memory::getInstance()->getinmemoryCard(position);
     }else{
         position2 = position;
-        answer = "SEC" + Memory::getInstance()->getinmemoryCard(position);
+        answer = Memory::getInstance()->getinmemoryCard(position);
     }
 
     return answer;

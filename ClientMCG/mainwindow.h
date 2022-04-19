@@ -32,7 +32,7 @@ public:
     QPushButton* previousCard;
     QTimer *timer=new QTimer();
     QMessageBox msgBox;
-    bool play_started = false;
+    bool first_card;
     int score1 = 0;
     int score2 = 0;
     int pairsofcards = 20;
