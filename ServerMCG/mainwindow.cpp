@@ -61,6 +61,7 @@ void MainWindow::onStateChanged(QAbstractSocket::SocketState state)
         QTcpSocket* s = static_cast<QTcpSocket*>(QObject::sender());
         sockets.removeOne(s);
     }
+
 }
 
 
@@ -81,7 +82,9 @@ void MainWindow::onReadyRead()
         break;
        }
     }*/
-
+    if(datastr.contains("Who starts")){
+        onSendButtonPressed(random_player());
+    }
     if(datastr.contains("card")){
         qDebug() << "Position get it";
         parsetosearch(datastr);
@@ -90,10 +93,14 @@ void MainWindow::onReadyRead()
         string equals = GameLogic::getInstance()->are_equals();
         if(equals == "YES"){
             onSendButtonPressed("YESEQUALS");
+            Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position1);
+            Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position2);
             GameLogic::getInstance()->position1 = "";
             GameLogic::getInstance()->position2 = "";
         }else{
             onSendButtonPressed("NOEQUALS");
+            Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position1);
+            Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position2);
             GameLogic::getInstance()->position1 = "";
             GameLogic::getInstance()->position2 = "";
         }
@@ -109,6 +116,7 @@ void MainWindow::parsetosearch(QString info){
     cout << "The card is: " + card << endl;
     QString image = send_imagebase64(QString::fromStdString(card));
     onSendButtonPressed(image);
+    update_HF();
 }
 
 /**
@@ -154,7 +162,33 @@ void MainWindow::startGame(){
 
 }
 
+/**
+ * @brief MainWindow::random_player
+ */
+
+QString MainWindow::random_player(){
+    int player;
+    srand(time(NULL));
+    player = rand()%2;
+    QString player_number = QString::number(player);
+    return player_number;
+}
+
 void MainWindow::update_message(){
     Handler::getInstance()->setmessagetosend(ptrmessagetosend);
+
+}
+
+/**
+ * @brief MainWindow::update_HF
+ */
+
+void MainWindow::update_HF(){
+    int hits = Memory::getInstance()->pagehits;
+    int faults = Memory::getInstance()->pagefaults;
+    QString pageh = QString::number(hits);
+    QString pagef = QString::number(faults);
+    ui->lblhits->setText(pageh);
+    ui->lblfaults->setText(pagef);
 
 }

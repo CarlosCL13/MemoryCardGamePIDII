@@ -1050,7 +1050,7 @@
      <string>Score:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblpoinst2">
+   <widget class="QLabel" name="lblpoints2">
     <property name="geometry">
      <rect>
       <x>820</x>
@@ -1074,6 +1074,45 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblgameturn">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>50</y>
+      <width>81</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Game turn: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblturn">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>50</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>520</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Who starts?</string>
     </property>
    </widget>
   </widget>

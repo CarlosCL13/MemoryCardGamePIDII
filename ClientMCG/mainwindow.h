@@ -30,6 +30,8 @@ public:
     static MainWindow* getInstance();
     QPushButton* currentCard;
     QPushButton* previousCard;
+    QString playername1;
+    QString playername2;
     QTimer *timer=new QTimer();
     QMessageBox msgBox;
     bool first_card;
@@ -45,6 +47,8 @@ public slots:
     void uncovered_card();
     void startGame();
     void addplayersname(QString name1, QString name2);
+    void start_player(QString player);
+    void update_player();
     void setimagecard1(QString encoded, QPushButton* button);
     void setimagecard2(QString encoded, QPushButton* button);
     void partial_result1();
@@ -53,6 +57,9 @@ public slots:
     void restartCards();
 
 
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

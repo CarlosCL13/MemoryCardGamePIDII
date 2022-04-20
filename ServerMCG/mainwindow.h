@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include "memory.h"
+#include <time.h>
 
 //Base64
 #include <QBuffer>
@@ -45,6 +46,8 @@ public slots:
     QString send_imagebase64(QString type);
     void parsetosearch(QString info);
     void update_message();
+    QString random_player();
+    void update_HF();
 
 private:
     Ui::MainWindow *ui;

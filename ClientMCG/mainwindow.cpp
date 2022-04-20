@@ -78,15 +78,20 @@ MainWindow::~MainWindow()
 void MainWindow::addplayersname(QString name1, QString name2){
     QString player1 = name1;
     QString player2 = name2;
+    playername1 = name1;
+    playername2 = name2;
     ui->lblname1->setText(player1);
     ui->lblname2->setText(player2);
+
 }
+
 
 /**
  * @brief MainWindow::startGame initializes game components, such as buttons, scores, and pairs remaining counter
  */
 
 void MainWindow::startGame(){
+
     first_card = true;
 
     pairsofcards = 20;
@@ -97,15 +102,15 @@ void MainWindow::startGame(){
 
     score2 = 0;
 
-    ui->lblpoinst2->setText(QString::number(score2));
+    ui->lblpoints2->setText(QString::number(score2));
 
-    ui->frame->setEnabled(true);
+    ui->frame->setEnabled(false);
 
     QList<QPushButton *> buttons =  ui->centralwidget->findChildren<QPushButton*>();
        foreach (QPushButton* b, buttons) {
            b->setEnabled(true);
            b->setIcon(QIcon());
-       }
+    }
 }
 
 
@@ -131,8 +136,11 @@ void MainWindow::onReadyRead()
             first_card = true;
         }
 
-    }else if(datastr.length()<10){
-        if(datastr.contains("YESEQUALS")){
+    }else{
+        if(datastr.length() < 2){
+            start_player(datastr);
+        }
+        else if(datastr.contains("YESEQUALS")){
             partial_result1();
         }
         else{
@@ -142,6 +150,32 @@ void MainWindow::onReadyRead()
 
 }
 
+/**
+ * @brief MainWindow::start_player
+ * @param player
+ */
+
+void MainWindow::start_player(QString player){
+    ui->frame->setEnabled(true);
+    if(player == "0"){
+        ui->lblturn->setText(playername1);
+    }else{
+        ui->lblturn->setText(playername2);
+    }
+}
+
+/**
+ * @brief MainWindow::update_player
+ */
+
+void MainWindow::update_player(){
+    QString player_turn = ui->lblturn->text();
+    if(player_turn == playername1){
+        ui->lblturn->setText(playername2);
+    }else{
+        ui->lblturn->setText(playername1);
+    }
+}
 
 /**
  * @brief MainWindow::onSendButtonPressed Allow send messages at the server
@@ -164,9 +198,16 @@ void MainWindow::onSendButtonPressed(QString message)
 void MainWindow::setimagecard1(QString encoded, QPushButton* button){
     QPixmap image;
     image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
-    QIcon ButtonIcon(image);
-    button->setIcon(ButtonIcon);
-    button->setIconSize(QSize(60,60));
+    if(!image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()))){
+        qDebug() << "Error loading the image";
+    }else{
+        image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
+        QIcon ButtonIcon;
+        ButtonIcon.addPixmap(QPixmap(image),QIcon::Disabled);
+        button->setIcon(ButtonIcon);
+        button->setIconSize(QSize(60,60));
+    }
+
 }
 
 /**
@@ -178,11 +219,18 @@ void MainWindow::setimagecard1(QString encoded, QPushButton* button){
 void MainWindow::setimagecard2(QString encoded, QPushButton* button){
     QPixmap image;
     image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
-    QIcon ButtonIcon(image);
-    button->setIcon(ButtonIcon);
-    button->setIconSize(QSize(60,60));
-    ui->frame->setEnabled(false);
-    onSendButtonPressed("Are equals");
+    if(!image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()))){
+        qDebug() << "Error loading the image";
+    }else{
+        image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
+        QIcon ButtonIcon;
+        ButtonIcon.addPixmap(QPixmap(image),QIcon::Disabled);
+        button->setIcon(ButtonIcon);
+        button->setIconSize(QSize(60,60));
+        ui->frame->setEnabled(false);
+        onSendButtonPressed("Are equals");
+    }
+
 }
 
 /**
@@ -210,14 +258,26 @@ void MainWindow::final_result(){
     msgBox.setEscapeButton(QMessageBox::No);
     ui->frame->setEnabled(true);
     if(pairsofcards == 0){
-        msgBox.setText("¡You win! Final score: " + QString::number(score1) + "\nIt was fun?");
-        if (QMessageBox::Yes == msgBox.exec()){
-            QCoreApplication::quit();
+        if(score1>score2){
+            msgBox.setText("¡You win! " +playername1+  "Final score: " + QString::number(score1) + "\nIt was fun?");
+            if (QMessageBox::Yes == msgBox.exec()){
+                QCoreApplication::quit();
+            }
+            else{
+                QCoreApplication::quit();
+            }
+        }else{
+            msgBox.setText("¡You win! " +playername2+  "Final score: " + QString::number(score2) + "\nIt was fun?");
+            if (QMessageBox::Yes == msgBox.exec()){
+                QCoreApplication::quit();
+            }
+            else{
+                QCoreApplication::quit();
+            }
         }
-        else{
-            QCoreApplication::quit();
-        }
+
     }
+    update_player();
 }
 
 /**
@@ -225,8 +285,14 @@ void MainWindow::final_result(){
  */
 
 void MainWindow::partial_result1(){
-    score1++;
-    ui->lblpoints1->setText(QString::number(score1));
+    QString turn = ui->lblturn->text();
+    if(turn == playername1){
+        score1+=5;
+        ui->lblpoints1->setText(QString::number(score1));
+    }else{
+        score2+=5;
+        ui->lblpoints2->setText(QString::number(score2));
+    }
     pairsofcards--;
     final_result();
 }
@@ -236,8 +302,14 @@ void MainWindow::partial_result1(){
  */
 
 void MainWindow::partial_result2(){
-    score1--;
-    ui->lblpoints1->setText(QString::number(score1));
+    QString turn = ui->lblturn->text();
+    if(turn == playername1){
+        score1-=2;
+        ui->lblpoints1->setText(QString::number(score1));
+    }else{
+        score2-=2;
+        ui->lblpoints2->setText(QString::number(score2));
+    }
     QTimer::singleShot(1000, this, SLOT(restartCards()));
 }
 
@@ -256,6 +328,13 @@ void MainWindow::restartCards(){
 
     ui->frame->setEnabled(true);
 
+    update_player();
 }
 
+
+
+void MainWindow::on_pushButton_clicked(){
+    onSendButtonPressed("Who starts");
+    ui->pushButton->setEnabled(false);
+}
 

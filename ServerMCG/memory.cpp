@@ -20,6 +20,8 @@ Memory::Memory(){}
  */
 
 void Memory::start_matrix(){
+    pagehits = 0;
+    pagefaults = 0;
     int row;
     int column;
     srand(time(NULL));
@@ -105,6 +107,9 @@ string Memory::getinmemoryCard(string position){
 void Memory::erasecardinmemory(string position){
     string positiontoerase = position;
     memorymatrix.erase(positiontoerase);
+    int memorysize = memorymatrix.size();
+    string size = to_string(memorysize);
+    cout << "The memory size is: " + size << endl;
 }
 
 

@@ -5,6 +5,7 @@
 #include <string>
 #include <QImage>
 #include "cards.h"
+#include <string>
 #include <map>
 #include<time.h>
 
@@ -19,9 +20,9 @@ private:
 public:
     Memory();
 
-    int pagehits = 0;
+    int pagehits;
 
-    int pagefaults = 0;
+    int pagefaults;
 
     static Memory* getInstance();
 
@@ -42,6 +43,7 @@ public:
     void loadcardinmemory(string position, string information);
 
     void erasecardinmemory(string position);
+
 
 };
 

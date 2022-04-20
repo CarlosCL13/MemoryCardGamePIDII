@@ -32,10 +32,10 @@ void ClientRegister::on_startButton_clicked()
 {
     name1 = ui->name1->text();
     name2 = ui->name2->text();
-    MainWindow* window = new MainWindow;
-    window->addplayersname(name1, name2);
+    MainWindow::getInstance()->addplayersname(name1, name2);
     this->close();
-    window->show();
+    MainWindow::getInstance()->show();
+
 }
 
 
