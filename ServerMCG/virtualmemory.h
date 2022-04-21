@@ -31,6 +31,8 @@ public:
 
     void changeStatus(string position);
 
+    void dowload_statuscard(string position);
+
     string types[40] = {"discord","facebook","github","google","instagram","linkedin","messenger","netflix","pinterest","skype",
                         "snapchat","spotify","telegram","tiktok","twitch","waze","whatsapp","wikipedia","youtube","zoom",
                         "discord","facebook","github","google","instagram","linkedin","messenger","netflix","pinterest","skype",

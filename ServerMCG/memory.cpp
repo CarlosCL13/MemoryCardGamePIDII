@@ -36,6 +36,37 @@ void Memory::start_matrix(){
 }
 
 /**
+ * @brief Memory::dowload_cards
+ */
+
+void Memory::dowload_cards(){
+    auto iter = memorymatrix.begin();
+    while (iter != memorymatrix.end()) {
+        VirtualMemory::getInstance()->dowload_statuscard(iter->first);
+        ++iter;
+    }
+    memorymatrix.clear();
+}
+
+/**
+ * @brief Memory::shuffle change the cards that are in memory randomly
+ */
+
+void Memory::shuffle(){
+    dowload_cards();
+    int row;
+    int column;
+    srand(time(NULL));
+    for(int i= 0;i< 15;i++){
+        row = rand()%4;
+        column = rand()%10;
+        string position = to_string(row) + ":" + to_string(column);
+        VirtualMemory::getInstance()->changeStatus(position);
+        loadcardinmemory(position, VirtualMemory::getInstance()->getCard(position));
+    }
+}
+
+/**
  * @brief Memory::loadcardinmemory load cards from disk to memory
  * @param position
  * @param information
@@ -49,6 +80,7 @@ void Memory::loadcardinmemory(string position, string information){
     loaded_cards->type = information;
     loaded_cards->size = imagesize();
     memorymatrix[position] = *loaded_cards;
+    //get_memoryusage(position);
     //cout << "The type is: " + memorymatrix[position].type << endl;
 }
 
@@ -62,10 +94,14 @@ string Memory::is_loaded_card(string position){
     string answer = "NO";
 
     if (memorymatrix.find(position) == memorymatrix.end()){
+        pagefaults++;
+        cout << "Page Faults: " + to_string(pagefaults) << endl;
         return answer;
     }
     else{
         answer = memorymatrix[position].type;
+        pagehits++;
+        cout << "Page Hits: " + to_string(pagehits) << endl;
     }
 
     return answer;
@@ -80,8 +116,6 @@ string Memory::is_loaded_card(string position){
 string Memory::getinmemoryCard(string position){
     string load = is_loaded_card(position);
     if(load != "NO"){
-        pagehits++;
-        cout << "Page Hits: " + to_string(pagehits) << endl;
         return load;
     }
     else{
@@ -89,12 +123,13 @@ string Memory::getinmemoryCard(string position){
             loadcardinmemory(position, VirtualMemory::getInstance()->getCard(position));
         }
         else{
+            string toerase = memorymatrix.end()->first;
+            /*memory_usage -= memorymatrix[toerase].size;*/
+            VirtualMemory::getInstance()->dowload_statuscard(toerase);
             memorymatrix.erase(prev(memorymatrix.end()));
             VirtualMemory::getInstance()->changeStatus(position);
             loadcardinmemory(position, VirtualMemory::getInstance()->getCard(position));
         }
-        pagefaults++;
-        cout << "Page Faults: " + to_string(pagefaults) << endl;
         return memorymatrix[position].type;
     }
 }
@@ -106,6 +141,7 @@ string Memory::getinmemoryCard(string position){
 
 void Memory::erasecardinmemory(string position){
     string positiontoerase = position;
+    //memory_usage-= memorymatrix[position].size;
     memorymatrix.erase(positiontoerase);
     int memorysize = memorymatrix.size();
     string size = to_string(memorysize);
@@ -124,3 +160,14 @@ int Memory::imagesize(){
     int size = img.sizeInBytes();
     return size;
 }
+
+/**
+ * @brief Memory::get_memoryusage
+ * @param position
+ */
+
+/*void Memory::get_memoryusage(string position){
+    string positioninmemory = position;
+    int size = memorymatrix[positioninmemory].size;
+    memory_usage += size;
+}*/

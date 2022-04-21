@@ -32,7 +32,7 @@ public:
 
     int imagesize();
 
-    int freememory = 0;
+    int memory_usage;
 
     void start_matrix();
 
@@ -43,6 +43,12 @@ public:
     void loadcardinmemory(string position, string information);
 
     void erasecardinmemory(string position);
+
+    void shuffle();
+
+    void dowload_cards();
+
+    //void get_memoryusage(string position);
 
 
 };

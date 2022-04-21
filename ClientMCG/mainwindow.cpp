@@ -200,6 +200,7 @@ void MainWindow::setimagecard1(QString encoded, QPushButton* button){
     image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
     if(!image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()))){
         qDebug() << "Error loading the image";
+        currentCard->setEnabled(true);
     }else{
         image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
         QIcon ButtonIcon;
@@ -221,6 +222,8 @@ void MainWindow::setimagecard2(QString encoded, QPushButton* button){
     image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
     if(!image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()))){
         qDebug() << "Error loading the image";
+        currentCard->setEnabled(true);
+
     }else{
         image.loadFromData(QByteArray::fromBase64(encoded.toLocal8Bit()));
         QIcon ButtonIcon;

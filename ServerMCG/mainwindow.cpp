@@ -84,10 +84,13 @@ void MainWindow::onReadyRead()
     }*/
     if(datastr.contains("Who starts")){
         onSendButtonPressed(random_player());
+        //update_memoryusage();
+        memory_usage();
     }
     if(datastr.contains("card")){
         qDebug() << "Position get it";
         parsetosearch(datastr);
+        memory_usage();
     }
     if(datastr.contains("Are equals")){
         string equals = GameLogic::getInstance()->are_equals();
@@ -97,16 +100,25 @@ void MainWindow::onReadyRead()
             Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position2);
             GameLogic::getInstance()->position1 = "";
             GameLogic::getInstance()->position2 = "";
+            //update_memoryusage();
+            Memory::getInstance()->shuffle();
+            memory_usage();
         }else{
             onSendButtonPressed("NOEQUALS");
             Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position1);
             Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position2);
             GameLogic::getInstance()->position1 = "";
             GameLogic::getInstance()->position2 = "";
+            memory_usage();
         }
     }
 
 }
+
+/**
+ * @brief MainWindow::parsetosearch
+ * @param info
+ */
 
 void MainWindow::parsetosearch(QString info){
     QString position = info.remove(0,4);
@@ -117,6 +129,7 @@ void MainWindow::parsetosearch(QString info){
     QString image = send_imagebase64(QString::fromStdString(card));
     onSendButtonPressed(image);
     update_HF();
+    //update_memoryusage();
 }
 
 /**
@@ -151,7 +164,7 @@ void MainWindow::onSendButtonPressed(QString msg)
 }
 
 /**
- * @brief MainWindow::startGame initializes game components, such as matrix, scores, and pairs remaining counter
+ * @brief MainWindow::startGame initializes game components, such as matrix
  */
 
 void MainWindow::startGame(){
@@ -191,4 +204,38 @@ void MainWindow::update_HF(){
     ui->lblhits->setText(pageh);
     ui->lblfaults->setText(pagef);
 
+}
+
+/**
+ * @brief MainWindow::update_memoryusage
+ */
+
+/*void MainWindow::update_memoryusage(){
+    int memory = Memory::getInstance()->memory_usage;
+    QString memoryusage = QString::number(memory);
+    ui->lblbytes->setText(memoryusage);
+}*/
+
+/**
+ * @brief MainWindow::memory_usage
+ */
+
+void MainWindow::memory_usage(){
+    int tSize = 0, resident = 0, share = 0;
+    ifstream buffer("/proc/self/statm");
+    buffer >> tSize >> resident >> share;
+    buffer.close();
+
+    long page_size_kb = sysconf(_SC_PAGE_SIZE) / 1024; // in case x86-64 is configured to use 2MB pages
+    double rss = resident * page_size_kb;
+    cout << "RSS - " << rss << " kB\n";
+
+    double shared_mem = share * page_size_kb;
+    cout << "Shared Memory - " << shared_mem << " kB" << endl;
+
+    cout << "Private Memory - " << rss - shared_mem << " kB" << endl;
+
+    ui->lblshared->setText(QString::number(shared_mem)+" kB");
+
+    ui->lblprivate->setText(QString::number(rss - shared_mem)+" kB");
 }

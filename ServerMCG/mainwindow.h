@@ -48,6 +48,8 @@ public slots:
     void update_message();
     QString random_player();
     void update_HF();
+    //void update_memoryusage();
+    void memory_usage();
 
 private:
     Ui::MainWindow *ui;

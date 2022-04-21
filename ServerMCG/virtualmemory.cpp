@@ -111,48 +111,99 @@ string VirtualMemory::getCard(std::string position){
  */
 void VirtualMemory::changeStatus(string position){
     std::ifstream archive;
-        archive.open("Disk.txt",std::ios::in);
-        if(archive.fail()){
-            std::cout<<"Can't open the disk";
-        }
-        std::string text;
+    archive.open("Disk.txt",std::ios::in);
+    if(archive.fail()){
+        std::cout<<"Can't open the disk";
+    }
+    std::string text;
 
-        std::string information;
+    std::string information;
 
-        while (getline(archive, text)) {
-            information += text;
-            information += "\n";
-        }
-        archive.close();
-        int length = information.length();
-        int raw = 0;
-        int column = 0;
-        std::string changed_text;
-        for(int i= 0 ;i <= length;i++){
+    while (getline(archive, text)) {
+        information += text;
+        information += "\n";
+    }
+    archive.close();
+    int length = information.length();
+    int raw = 0;
+    int column = 0;
+    std::string changed_text;
+    for(int i= 0 ;i <= length;i++){
 
-            std::string parenthesis;
-            parenthesis +=information[i];
-            std::string position2 = std::to_string(raw) + ":" +std::to_string(column);
-            if(position == position2 ){
-                changed_text += "t";
-                position = "find it";
-            }
-            else{
-                changed_text += parenthesis;
-            }
-            if(column == 10){
-                raw += 1;
-                column = 0;
-                continue;
-                std::cout<<raw<<std::endl;
-            }
-            if(parenthesis == "]"){
-                column += 1;
-            }
+        std::string parenthesis;
+        parenthesis +=information[i];
+        std::string position2 = std::to_string(raw) + ":" +std::to_string(column);
+        if(position == position2 ){
+            changed_text += "t";
+            position = "find it";
         }
-        std::ofstream archive2;
-        archive2.open("Disk.txt",std::ios::out);
-        archive2<<changed_text;
-        archive2.close();
+        else{
+            changed_text += parenthesis;
+        }
+        if(column == 10){
+            raw += 1;
+            column = 0;
+            continue;
+            std::cout<<raw<<std::endl;
+        }
+        if(parenthesis == "]"){
+            column += 1;
+        }
+    }
+    std::ofstream archive2;
+    archive2.open("Disk.txt",std::ios::out);
+    archive2<<changed_text;
+    archive2.close();
 }
 
+/**
+ * @brief VirtualMemory::dowload_statuscard changes the status of a card being removed from memory
+ * @param position
+ */
+
+void VirtualMemory::dowload_statuscard(string position){
+    std::ifstream archive;
+    archive.open("Disk.txt",std::ios::in);
+    if(archive.fail()){
+        std::cout<<"Can't open the disk";
+    }
+    std::string text;
+
+    std::string information;
+
+    while (getline(archive, text)) {
+        information += text;
+        information += "\n";
+    }
+    archive.close();
+    int length = information.length();
+    int raw = 0;
+    int column = 0;
+    std::string changed_text;
+    for(int i= 0 ;i <= length;i++){
+
+        std::string parenthesis;
+        parenthesis +=information[i];
+        std::string position2 = std::to_string(raw) + ":" +std::to_string(column);
+        if(position == position2 ){
+            changed_text += "f";
+            position = "find it";
+        }
+        else{
+            changed_text += parenthesis;
+        }
+        if(column == 10){
+            raw += 1;
+            column = 0;
+            continue;
+            std::cout<<raw<<std::endl;
+        }
+        if(parenthesis == "]"){
+            column += 1;
+        }
+    }
+    std::ofstream archive2;
+    archive2.open("Disk.txt",std::ios::out);
+    archive2<<changed_text;
+    archive2.close();
+}
