@@ -55,6 +55,7 @@ public slots:
     void partial_result2();
     void final_result();
     void restartCards();
+    void power_up_received(QString powerup);
 
 
 

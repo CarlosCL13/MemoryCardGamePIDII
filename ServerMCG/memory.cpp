@@ -53,6 +53,7 @@ void Memory::dowload_cards(){
  */
 
 void Memory::shuffle(){
+    cout << "shuffled" << endl;
     dowload_cards();
     int row;
     int column;
@@ -80,7 +81,6 @@ void Memory::loadcardinmemory(string position, string information){
     loaded_cards->type = information;
     loaded_cards->size = imagesize();
     memorymatrix[position] = *loaded_cards;
-    //get_memoryusage(position);
     //cout << "The type is: " + memorymatrix[position].type << endl;
 }
 
@@ -160,14 +160,3 @@ int Memory::imagesize(){
     int size = img.sizeInBytes();
     return size;
 }
-
-/**
- * @brief Memory::get_memoryusage
- * @param position
- */
-
-/*void Memory::get_memoryusage(string position){
-    string positioninmemory = position;
-    int size = memorymatrix[positioninmemory].size;
-    memory_usage += size;
-}*/

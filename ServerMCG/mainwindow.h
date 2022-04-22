@@ -5,6 +5,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <iostream>
+#include <string>
 #include <fstream>
 #include "memory.h"
 #include <time.h>
@@ -33,9 +34,6 @@ public:
     ~MainWindow();
     static MainWindow* getInstance();
 
-    QString messagetosend = "";
-    QString *ptrmessagetosend = &messagetosend;
-
 
 public slots:
     void onNewConnection();
@@ -45,10 +43,8 @@ public slots:
     void startGame();
     QString send_imagebase64(QString type);
     void parsetosearch(QString info);
-    void update_message();
     QString random_player();
     void update_HF();
-    //void update_memoryusage();
     void memory_usage();
 
 private:

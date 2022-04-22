@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <mainwindow.h>
 
 using namespace std;
 

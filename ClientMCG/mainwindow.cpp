@@ -82,6 +82,7 @@ void MainWindow::addplayersname(QString name1, QString name2){
     playername2 = name2;
     ui->lblname1->setText(player1);
     ui->lblname2->setText(player2);
+    onSendButtonPressed(playername1+","+playername2);
 
 }
 
@@ -125,7 +126,8 @@ void MainWindow::onReadyRead()
     QString datastr = data;
     QString msg = datastr;
     msg.remove(0,1);
-    if(datastr.length()>10){
+
+    if(datastr.length()>20){
         if(first_card){
             previousCard=currentCard;
             setimagecard1(datastr,currentCard);
@@ -140,8 +142,13 @@ void MainWindow::onReadyRead()
         if(datastr.length() < 2){
             start_player(datastr);
         }
+        else if(datastr.contains("HITSPW")){
+            power_up_received(datastr);
+        }
         else if(datastr.contains("YESEQUALS")){
-            partial_result1();
+            QString type = datastr.remove(0,9);
+            power_up_received(type);
+            //partial_result1();
         }
         else{
             partial_result2();
@@ -159,8 +166,12 @@ void MainWindow::start_player(QString player){
     ui->frame->setEnabled(true);
     if(player == "0"){
         ui->lblturn->setText(playername1);
+        score1+=3;
+        ui->lblpoints1->setText(QString::number(score1));
     }else{
         ui->lblturn->setText(playername2);
+        score2+=3;
+        ui->lblpoints2->setText(QString::number(score2));
     }
 }
 
@@ -262,7 +273,8 @@ void MainWindow::final_result(){
     ui->frame->setEnabled(true);
     if(pairsofcards == 0){
         if(score1>score2){
-            msgBox.setText("¡You win! " +playername1+  "Final score: " + QString::number(score1) + "\nIt was fun?");
+            msgBox.setText("¡You win! " +playername1+  " Final score: " + QString::number(score1) + "\nIt was fun?");
+            onSendButtonPressed("Game over");
             if (QMessageBox::Yes == msgBox.exec()){
                 QCoreApplication::quit();
             }
@@ -270,7 +282,8 @@ void MainWindow::final_result(){
                 QCoreApplication::quit();
             }
         }else{
-            msgBox.setText("¡You win! " +playername2+  "Final score: " + QString::number(score2) + "\nIt was fun?");
+            msgBox.setText("¡You win! " +playername2+  " Final score: " + QString::number(score2) + "\nIt was fun?");
+            onSendButtonPressed("Game over");
             if (QMessageBox::Yes == msgBox.exec()){
                 QCoreApplication::quit();
             }
@@ -341,3 +354,30 @@ void MainWindow::on_pushButton_clicked(){
     ui->pushButton->setEnabled(false);
 }
 
+
+void MainWindow::power_up_received(QString powerup){
+    QString turn = ui->lblturn->text();
+    if(powerup == "github"){
+        if(turn == playername1){
+            score1+=10;
+            ui->lblpoints1->setText(QString::number(score1));
+            partial_result1();
+        }else{
+            score2+=10;
+            ui->lblpoints2->setText(QString::number(score2));
+            partial_result1();
+
+        }
+    }else if(powerup.contains("HITSPW")){
+        QStringList list = powerup.split(QLatin1Char(','), Qt::SkipEmptyParts);
+        if(list[0] == playername1){
+            score1+=15;
+            ui->lblpoints1->setText(QString::number(score1));
+        }else{
+            score2+=15;
+            ui->lblpoints1->setText(QString::number(score2));
+        }
+    }else{
+        partial_result1();
+    }
+}

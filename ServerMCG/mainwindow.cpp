@@ -29,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -75,42 +74,36 @@ void MainWindow::onReadyRead()
     QTcpSocket* s = static_cast<QTcpSocket*>(QObject::sender());
     const auto data = s->readAll();
     QString datastr = data;
-    /*Handler::getInstance()->messagehandler(datastr);
-    while(true){
-        if(messagetosend != ""){
-        this->onSendButtonPressed(messagetosend);
-        break;
-       }
-    }*/
-    if(datastr.contains("Who starts")){
+    if(datastr.contains(",")){
+        QStringList list = datastr.split(QLatin1Char(','), Qt::SkipEmptyParts);
+        Handler::getInstance()->getNames(list[0], list[1]);
+    }
+    else if(datastr.contains("Who starts")){
         onSendButtonPressed(random_player());
-        //update_memoryusage();
         memory_usage();
     }
-    if(datastr.contains("card")){
+    else if(datastr.contains("card")){
         qDebug() << "Position get it";
         parsetosearch(datastr);
         memory_usage();
     }
-    if(datastr.contains("Are equals")){
+    else if(datastr.contains("Are equals")){
         string equals = GameLogic::getInstance()->are_equals();
-        if(equals == "YES"){
-            onSendButtonPressed("YESEQUALS");
-            Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position1);
-            Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position2);
-            GameLogic::getInstance()->position1 = "";
-            GameLogic::getInstance()->position2 = "";
-            //update_memoryusage();
+        QString result = QString::fromStdString(equals);
+        if(result.contains("YES")){
+            onSendButtonPressed(result);
+            Handler::getInstance()->update_information();
             Memory::getInstance()->shuffle();
+            Handler::getInstance()->update_hits();
             memory_usage();
         }else{
             onSendButtonPressed("NOEQUALS");
-            Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position1);
-            Memory::getInstance()->erasecardinmemory(GameLogic::getInstance()->position2);
-            GameLogic::getInstance()->position1 = "";
-            GameLogic::getInstance()->position2 = "";
+            Handler::getInstance()->update_information();
             memory_usage();
         }
+    }else{
+        Memory::getInstance()->memorymatrix.clear();
+        memory_usage();
     }
 
 }
@@ -129,7 +122,6 @@ void MainWindow::parsetosearch(QString info){
     QString image = send_imagebase64(QString::fromStdString(card));
     onSendButtonPressed(image);
     update_HF();
-    //update_memoryusage();
 }
 
 /**
@@ -144,8 +136,6 @@ QString MainWindow::send_imagebase64(QString type){
     qp.save(&buffer, "PNG");
     QString encoded = buffer.data().toBase64();
     string encodedstr = encoded.toStdString();
-    //cout << "se envia" << endl;
-    //onSendButtonPressed(card_number+encoded);
     QString information = encoded;
     return information;
 
@@ -184,13 +174,16 @@ QString MainWindow::random_player(){
     srand(time(NULL));
     player = rand()%2;
     QString player_number = QString::number(player);
-    return player_number;
+    if(player == 0){
+        Handler::getInstance()->turn = Handler::getInstance()->player1;
+        return player_number;
+    }else{
+        Handler::getInstance()->turn = Handler::getInstance()->player2;
+        return player_number;
+    }
+
 }
 
-void MainWindow::update_message(){
-    Handler::getInstance()->setmessagetosend(ptrmessagetosend);
-
-}
 
 /**
  * @brief MainWindow::update_HF
@@ -206,23 +199,14 @@ void MainWindow::update_HF(){
 
 }
 
-/**
- * @brief MainWindow::update_memoryusage
- */
-
-/*void MainWindow::update_memoryusage(){
-    int memory = Memory::getInstance()->memory_usage;
-    QString memoryusage = QString::number(memory);
-    ui->lblbytes->setText(memoryusage);
-}*/
 
 /**
- * @brief MainWindow::memory_usage
+ * @brief MainWindow::memory_usage get the used memory information
  */
 
 void MainWindow::memory_usage(){
     int tSize = 0, resident = 0, share = 0;
-    ifstream buffer("/proc/self/statm");
+    ifstream buffer("/proc/self/statm"); //Provides information about memory usage, measured in pages.
     buffer >> tSize >> resident >> share;
     buffer.close();
 
@@ -239,3 +223,4 @@ void MainWindow::memory_usage(){
 
     ui->lblprivate->setText(QString::number(rss - shared_mem)+" kB");
 }
+

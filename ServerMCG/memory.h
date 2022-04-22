@@ -48,7 +48,6 @@ public:
 
     void dowload_cards();
 
-    //void get_memoryusage(string position);
 
 
 };

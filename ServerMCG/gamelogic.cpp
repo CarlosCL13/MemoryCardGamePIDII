@@ -41,10 +41,9 @@ string GameLogic::are_equals(){
     string type1 = Memory::getInstance()->getinmemoryCard(position1);
     string type2 = Memory::getInstance()->getinmemoryCard(position2);
     if(type1 == type2){
-        return "YES";
+        return "YESEQUALS"+type1;
     }
     else{
         return "NO";
     }
-
 }
