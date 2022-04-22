@@ -30,7 +30,7 @@ public:
 
     map<string,Cards> memorymatrix;
 
-    int imagesize();
+    int imagesize(QString type);
 
     int memory_usage;
 

@@ -36,7 +36,7 @@ void Memory::start_matrix(){
 }
 
 /**
- * @brief Memory::dowload_cards
+ * @brief Memory::dowload_cards change card status to false
  */
 
 void Memory::dowload_cards(){
@@ -79,9 +79,8 @@ void Memory::loadcardinmemory(string position, string information){
     loaded_cards->state = information[0];
     information.erase(0,1);
     loaded_cards->type = information;
-    loaded_cards->size = imagesize();
+    loaded_cards->size = imagesize(QString::fromStdString(information));
     memorymatrix[position] = *loaded_cards;
-    //cout << "The type is: " + memorymatrix[position].type << endl;
 }
 
 /**
@@ -124,7 +123,6 @@ string Memory::getinmemoryCard(string position){
         }
         else{
             string toerase = memorymatrix.end()->first;
-            /*memory_usage -= memorymatrix[toerase].size;*/
             VirtualMemory::getInstance()->dowload_statuscard(toerase);
             memorymatrix.erase(prev(memorymatrix.end()));
             VirtualMemory::getInstance()->changeStatus(position);
@@ -141,7 +139,6 @@ string Memory::getinmemoryCard(string position){
 
 void Memory::erasecardinmemory(string position){
     string positiontoerase = position;
-    //memory_usage-= memorymatrix[position].size;
     memorymatrix.erase(positiontoerase);
     int memorysize = memorymatrix.size();
     string size = to_string(memorysize);
@@ -154,8 +151,8 @@ void Memory::erasecardinmemory(string position){
  * @return
  */
 
-int Memory::imagesize(){
-    const char *imageName = ":/github.png";
+int Memory::imagesize(QString type){
+    QString imageName = ":/"+type+".png";
     QImage img(imageName);
     int size = img.sizeInBytes();
     return size;

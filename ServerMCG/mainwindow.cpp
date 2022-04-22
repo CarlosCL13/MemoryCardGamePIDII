@@ -103,6 +103,7 @@ void MainWindow::onReadyRead()
         }
     }else{
         Memory::getInstance()->memorymatrix.clear();
+        cout << Memory::getInstance()->memorymatrix.size() << endl;
         memory_usage();
     }
 
@@ -212,12 +213,8 @@ void MainWindow::memory_usage(){
 
     long page_size_kb = sysconf(_SC_PAGE_SIZE) / 1024; // in case x86-64 is configured to use 2MB pages
     double rss = resident * page_size_kb;
-    cout << "RSS - " << rss << " kB\n";
 
     double shared_mem = share * page_size_kb;
-    cout << "Shared Memory - " << shared_mem << " kB" << endl;
-
-    cout << "Private Memory - " << rss - shared_mem << " kB" << endl;
 
     ui->lblshared->setText(QString::number(shared_mem)+" kB");
 

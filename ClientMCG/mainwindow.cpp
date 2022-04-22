@@ -347,13 +347,19 @@ void MainWindow::restartCards(){
     update_player();
 }
 
-
+/**
+ * @brief MainWindow::on_pushButton_clicked is responsible for asking which player starts the game
+ */
 
 void MainWindow::on_pushButton_clicked(){
     onSendButtonPressed("Who starts");
     ui->pushButton->setEnabled(false);
 }
 
+/**
+ * @brief MainWindow::power_up_receivedIt is responsible for increasing the score depending on the power up that a player obtained
+ * @param powerup
+ */
 
 void MainWindow::power_up_received(QString powerup){
     QString turn = ui->lblturn->text();

@@ -26,7 +26,6 @@ void VirtualMemory::generate_matrix(){
         exit(1);
     }
      for(int i = 0;i < 4;i++){
-         //i++;
         for(int j = 0; j < 10; j++){
                 string information;
                 information += "f";
@@ -42,12 +41,10 @@ void VirtualMemory::generate_matrix(){
                         types[position] = "";
                         break;
                     }
-                    //j++;
                 }
 
                 information += "]";
                 archive<<information;
-                //contador += 1;
         }
         archive<<"\n";
 
